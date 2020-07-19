@@ -5,6 +5,7 @@ import urllib
 import ssl
 from requests import Session
 from requests.auth import HTTPBasicAuth
+from np_helper import get_logger
 
 from suds.client import Client
 from suds.sax.element import Element
@@ -15,9 +16,11 @@ from suds import WebFault
 API_URL = "https://10.1.3.95:8005/spservice/service?wsdl"
 USERNAME = "soap_csys_infx"
 PASSWORD = "UCkW7QuxAonKwGdr"
+appname = "INFS_CLIENT"
+
+logger = get_logger(appname)
 
 def get_api():
-
 
     try:
         _create_unverified_https_context = ssl._create_unverified_context

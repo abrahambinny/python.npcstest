@@ -5,6 +5,7 @@ import urllib
 import ssl
 from requests import Session
 from requests.auth import HTTPBasicAuth
+from np_helper import get_logger
 
 from suds.client import Client
 from suds.sax.element import Element
@@ -16,8 +17,9 @@ API_URL = "https://10.1.3.95:8000/spservice/service?wsdl"
 USERNAME = "soap_csys_infs"
 PASSWORD = "76Hu25ZPNJzJ2k2N"
 
-def get_api():
+logger = get_logger("INFS_CLIENT")
 
+def get_api():
 
     try:
         _create_unverified_https_context = ssl._create_unverified_context
@@ -34,45 +36,60 @@ def get_api():
 
 def infs_handle_np_request(csys_resp):
 
-    client = get_api()
-    infs_resp = client.service.HandleNpRequest(
-        ServiceType = csys_resp['ServiceType'],
-        MessageCode = csys_resp['MessageCode'],
-        Number = csys_resp['Number'],
-        PortID = csys_resp['PortID'],
-        SubmissionID = csys_resp['SubmissionID'],
-        DonorID = csys_resp['DonorID'],
-        RecipientID = csys_resp['RecipientID'],
-        SimCardNumber = '',
-        CompanyFlag = '',
-        CPR = '',
-        CommercialRegNumber = '',
-        PassportNumber = '',
-        GCCID = '',
-        Comments = 'Response from csys',
-        OriginationID = csys_resp['OriginationID'],
-        DestinationID = csys_resp['DestinationID'],
-    )
+    try:
+        client = get_api()
+        infs_resp = client.service.HandleNpRequest(
+            ServiceType = csys_resp['ServiceType'],
+            MessageCode = csys_resp['MessageCode'],
+            Number = csys_resp['Number'],
+            PortID = csys_resp['PortID'],
+            SubmissionID = csys_resp['SubmissionID'],
+            DonorID = csys_resp['DonorID'],
+            RecipientID = csys_resp['RecipientID'],
+            SimCardNumber = '',
+            CompanyFlag = '',
+            CPR = '',
+            CommercialRegNumber = '',
+            PassportNumber = '',
+            GCCID = '',
+            Comments = 'Response from csys',
+            OriginationID = csys_resp['OriginationID'],
+            DestinationID = csys_resp['DestinationID'],
+        )
+        if infs_resp:
+            logger.info("INFS HandleNpRequest Response:")
+            logger.info(infs_resp)
+        else:
+            logger.error("INFS HandleNpRequest Error:")
+        return infs_resp
+    except Exception as e:
+        logger.error("INFS HandleNpRequest Error: {}".format(str(e)))
 
-    return infs_resp
 
 def infs_handle_np_request_cancel(csys_resp):
 
-    client = get_api()
-    infs_resp = client.service.HandleNpRequestCancel(
-        ServiceType = csys_resp['ServiceType'],
-        MessageCode = csys_resp['MessageCode'],
-        Number = csys_resp['Number'],
-        PortID = csys_resp['PortID'],
-        SubmissionID = csys_resp['SubmissionID'],
-        DonorID = csys_resp['DonorID'],
-        RecipientID = csys_resp['RecipientID'],
-        OriginationID = csys_resp['OriginationID'],
-        DestinationID = csys_resp['DestinationID'],
-    )
+    try:
+        client = get_api()
+        infs_resp = client.service.HandleNpRequestCancel(
+            ServiceType = csys_resp['ServiceType'],
+            MessageCode = csys_resp['MessageCode'],
+            PortID = csys_resp['PortID'],
+            OriginationID = csys_resp['OriginationID'],
+            DestinationID = csys_resp['DestinationID'],
+            # Number = csys_resp['Number'],
+            # SubmissionID = csys_resp['SubmissionID'],
+            # DonorID = csys_resp['DonorID'],
+            # RecipientID = csys_resp['RecipientID'],
+        )
+        if infs_resp:
+            logger.info("INFS HandleNpRequestCancel Response:")
+            logger.info(infs_resp)
+        else:
+            logger.error("INFS HandleNpRequestCancel Error:")
+        return infs_resp
+    except Exception as e:
+        logger.error("INFS HandleNpRequestCancel Error: {}".format(str(e)))
 
-    print(infs_resp)
-    return infs_resp
 
 
 if __name__ == "__main__":
@@ -80,9 +97,9 @@ if __name__ == "__main__":
     csys_resp = {
         "ServiceType" : "F",
         "MessageCode" : "MessageAck",
-        "Number" : "16511860",
-        "PortID" : "INFX-INFS-20200716-00014",
-        "SubmissionID" : "INFX-2020-07060060",
+        "Number" : "16511863",
+        "PortID" : "INFX-INFS-20200719-00003",
+        "SubmissionID" : "INFX-2020-07060063",
         "DonorID" : "INFS",
         "RecipientID" : "INFX",
         "OriginationID" : "CSYS",
@@ -91,4 +108,4 @@ if __name__ == "__main__":
 
 
     # infs_handle_np_request(client, csys_resp)
-    infs_handle_np_request_cancel(csys_resp)
+    # infs_handle_np_request_cancel(csys_resp)

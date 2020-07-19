@@ -6,8 +6,8 @@ import ssl
 from requests import Session
 from requests.auth import HTTPBasicAuth
 
-from infs_np_client import *
-from infx_np_client import *
+from np_helper import get_logger
+from infs_np_client import infs_handle_np_request, infs_handle_np_request_cancel
 
 from suds.client import Client
 from suds.sax.element import Element
@@ -18,6 +18,8 @@ from suds import WebFault
 API_URL = "https://m2m.test.npcs.bh/services/NpcdbService?wsdl"
 USERNAME = "soap_infx"
 PASSWORD = "soap_infx"
+
+logger = get_logger("CSYS_CLIENT_FOR_INFX")
 
 def get_api():
 
@@ -35,51 +37,82 @@ def get_api():
 
 def np_request_from_INFX(client, request):
 
-    csys_resp = client.service.SendNpRequest(
-        ServiceType = request['ServiceType'],
-        MessageCode = "NpRequest",
-        Number = request['Number'],
-        SubmissionID = request['SubmissionID'],
-        DonorID = request['DonorID'],
-        RecipientID = request['RecipientID'],
-        OriginationID = request['OriginationID'],
-        DestinationID = request['DestinationID'],
-        CompanyFlag = request['CompanyFlag'],
-        CPR = request['CPR'],
-        CommercialRegNumber = request['CommercialRegNumber'],
-        Comments = request['Comments'],
-        # PortID = "INFX-INFS-20200715-00002",
-        # SimCardNumber = "",
-        # PassportNumber = "",
-        # GCCID = "",
-    )
-    infs_resp = infs_handle_np_request(csys_resp)
-    print(infs_resp)
+    try:
+        csys_resp = client.service.SendNpRequest(
+            ServiceType = request['ServiceType'],
+            MessageCode = "NpRequest",
+            Number = request['Number'],
+            SubmissionID = request['SubmissionID'],
+            DonorID = request['DonorID'],
+            RecipientID = request['RecipientID'],
+            OriginationID = request['OriginationID'],
+            DestinationID = request['DestinationID'],
+            CompanyFlag = request['CompanyFlag'],
+            CPR = request['CPR'],
+            CommercialRegNumber = request['CommercialRegNumber'],
+            Comments = request['Comments'],
+            # PortID = "INFX-INFS-20200715-00002",
+            # SimCardNumber = "",
+            # PassportNumber = "",
+            # GCCID = "",
+        )
+        if (csys_resp):
+            logger.info("CSYS SendNpRequest Response:")
+            logger.info(csys_resp)
+            infs_resp = infs_handle_np_request(csys_resp)
+        else:
+            logger.error("CSYS SendNpRequest Error:")
+    except Exception as e:
+        logger.error("CSYS SendNpRequest Error: {}".format(str(e)))
 
 
 def np_request_cancel_from_INFX(client, request):
 
-    csys_resp = client.service.SendNpRequestCancel(
-       ServiceType = request['ServiceType'],
-        MessageCode = "NpRequestCancel",
+    try:
+        csys_resp = client.service.SendNpRequestCancel(
+        ServiceType = request['ServiceType'],
+            MessageCode = "NpRequestCancel",
+            Number = request['Number'],
+            SubmissionID = request['SubmissionID'],
+            DonorID = request['DonorID'],
+            RecipientID = request['RecipientID'],
+            OriginationID = request['OriginationID'],
+            DestinationID = request['DestinationID'],
+            PortID = request['PortID'],
+        )
+        if csys_resp:
+            logger.info("CSYS SendNpRequestCancel Response:")
+            logger.info(csys_resp)
+            infs_resp = infs_handle_np_request_cancel(csys_resp)
+        else:
+            logger.error("CSYS SendNpRequestCancel Error:")
+    except Exception as e:
+        logger.error("CSYS SendNpRequestCancel Error: {}".format(str(e)))
+
+
+def np_execute_from_INFX(client, request):
+
+    csys_resp = client.service.SendNpExecute(
+        ServiceType = request['ServiceType'],
+        MessageCode = request['MessageCode'],
         Number = request['Number'],
-        SubmissionID = request['SubmissionID'],
+        PortID = request['PortID'],
         DonorID = request['DonorID'],
         RecipientID = request['RecipientID'],
         OriginationID = request['OriginationID'],
         DestinationID = request['DestinationID'],
-        PortID = request['PortID'],
     )
-    print(csys_resp)
-    infs_handle_np_request_cancel(client, csys_resp)
+    logger.info(csys_resp)
+    infs_resp = infs_handle_np_execute(csys_resp)
+    logger.info(infs_resp)
 
 if __name__ == "__main__":
 
     request = {
         "ServiceType" : "F",
         "MessageCode" : "NpRequest",
-        "Number" : "16511861",
-        "SubmissionID" : "INFX-2020-07060061",
+        "Number" : "16511869",
+        "SubmissionID" : "INFX-2020-07060069",
         "DonorID" : "INFS",
         "RecipientID" : "INFX",
         "CompanyFlag" : "Y",
@@ -88,10 +121,11 @@ if __name__ == "__main__":
         "Comments" : "NP Request",
         "OriginationID" : "INFX",
         "DestinationID" : "CSYS",
-        "PortID" : "INFX-INFS-20200716-00014",
+        "PortID" : "INFX-INFS-20200719-00023",
     }
 
     client = get_api()
-    print(client)
+    # print(client)
     # np_request_from_INFX(client, request)
-    # np_request_cancel_from_INFX(client, request)
+    np_request_cancel_from_INFX(client, request)
+    # np_execute_from_INFX(client, request)
