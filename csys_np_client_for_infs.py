@@ -16,10 +16,10 @@ from suds.plugin import MessagePlugin
 from suds import WebFault
 
 API_URL = "https://m2m.test.npcs.bh/services/NpcdbService?wsdl"
-USERNAME = "soap_infx"
-PASSWORD = "soap_infx"
+USERNAME = "soap_infs"
+PASSWORD = "soap_infs"
 
-logger = get_logger("CSYS_CLIENT_FOR_INFX")
+logger = get_logger("CSYS_CLIENT_FOR_INFS")
 
 def get_api():
 
@@ -35,7 +35,7 @@ def get_api():
     return client
 
 
-def np_request_from_INFX(client, request):
+def np_request_from_INFS(client, request):
 
     try:
         csys_resp = client.service.SendNpRequest(
@@ -66,7 +66,7 @@ def np_request_from_INFX(client, request):
         logger.error("CSYS SendNpRequest Error: {}".format(str(e)))
 
 
-def np_request_cancel_from_INFX(client, request):
+def np_request_cancel_from_INFS(client, request):
 
     try:
         csys_resp = client.service.SendNpRequestCancel(
@@ -90,11 +90,11 @@ def np_request_cancel_from_INFX(client, request):
         logger.error("CSYS SendNpRequestCancel Error: {}".format(str(e)))
 
 
-def np_execute_from_INFX(client, request):
+def np_execute_from_INFS(client, request):
 
     csys_resp = client.service.SendNpExecute(
         ServiceType = request['ServiceType'],
-        MessageCode = request['MessageCode'],
+        MessageCode = "NpExecute",
         Number = request['Number'],
         PortID = request['PortID'],
         DonorID = request['DonorID'],
@@ -103,7 +103,22 @@ def np_execute_from_INFX(client, request):
         DestinationID = request['DestinationID'],
     )
     logger.info(csys_resp)
-    infs_resp = infs_handle_np_execute(csys_resp)
+
+
+def np_execute_complete_from_INFS(client, request):
+
+    csys_resp = client.service.SendNpExecuteComplete(
+        ServiceType = request['ServiceType'],
+        MessageCode = "NpExecuteComplete",
+        Number = request['Number'],
+        PortID = request['PortID'],
+        DonorID = request['DonorID'],
+        RecipientID = request['RecipientID'],
+        OriginationID = request['OriginationID'],
+        DestinationID = request['DestinationID'],
+    )
+    logger.info(csys_resp)
+    infs_resp = infs_handle_np_execute_complete(csys_resp)
     logger.info(infs_resp)
 
 if __name__ == "__main__":
@@ -111,8 +126,8 @@ if __name__ == "__main__":
     request = {
         "ServiceType" : "F",
         "MessageCode" : "NpRequest",
-        "Number" : "16511869",
-        "SubmissionID" : "INFX-2020-07060069",
+        "Number" : "16511870",
+        "SubmissionID" : "INFX-2020-07060070",
         "DonorID" : "INFS",
         "RecipientID" : "INFX",
         "CompanyFlag" : "Y",
@@ -121,11 +136,11 @@ if __name__ == "__main__":
         "Comments" : "NP Request",
         "OriginationID" : "INFX",
         "DestinationID" : "CSYS",
-        "PortID" : "INFX-INFS-20200719-00023",
+        "PortID" : "INFX-INFS-20200719-00024",
     }
 
     client = get_api()
     # print(client)
-    # np_request_from_INFX(client, request)
-    np_request_cancel_from_INFX(client, request)
-    # np_execute_from_INFX(client, request)
+    # np_request_from_INFS(client, request)
+    # np_request_cancel_from_INFS(client, request)
+    np_execute_from_INFS(client, request)

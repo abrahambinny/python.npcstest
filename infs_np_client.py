@@ -91,21 +91,162 @@ def infs_handle_np_request_cancel(csys_resp):
         logger.error("INFS HandleNpRequestCancel Error: {}".format(str(e)))
 
 
+def infs_handle_np_execute_broadcast(csys_resp):
+
+    try:
+        client = get_api()
+        infs_resp = client.service.HandleNpExecuteBroadcast(
+            ServiceType = csys_resp['ServiceType'],
+            MessageCode = csys_resp['MessageCode'],
+            Number = csys_resp['Number'],
+            PortID = csys_resp['PortID'],
+            DonorID = csys_resp['DonorID'],
+            RecipientID = csys_resp['RecipientID'],
+            NewRoute = csys_resp['NewRoute'],
+            PortingDatetime = csys_resp['PortingDatetime'],
+            OriginationID = csys_resp['OriginationID'],
+            DestinationID = csys_resp['DestinationID'],
+        )
+        if infs_resp:
+            logger.info("INFS HandleNpExecuteBroadcast Response:")
+            logger.info(infs_resp)
+        else:
+            logger.error("INFS HandleNpExecuteBroadcast Error:")
+        return infs_resp
+    except Exception as e:
+        logger.error("INFS HandleNpExecuteBroadcast Error: {}".format(str(e)))
+
+
+def infs_handle_np_execute_complete(csys_resp):
+
+    try:
+        client = get_api()
+        infs_resp = client.service.HandleNpExecuteComplete(
+            ServiceType = csys_resp['ServiceType'],
+            MessageCode = csys_resp['MessageCode'],
+            PortID = csys_resp['PortID'],
+            OriginationID = csys_resp['OriginationID'],
+            DestinationID = csys_resp['DestinationID'],
+            # Number = csys_resp['Number'],
+            # SubmissionID = csys_resp['SubmissionID'],
+            # DonorID = csys_resp['DonorID'],
+            # RecipientID = csys_resp['RecipientID'],
+        )
+        if infs_resp:
+            logger.info("INFS HandleNpExecuteComplete Response:")
+            logger.info(infs_resp)
+        else:
+            logger.error("INFS HandleNpExecuteComplete Error:")
+        return infs_resp
+    except Exception as e:
+        logger.error("INFS HandleNpExecuteComplete Error: {}".format(str(e)))
+
+
+def infs_handle_np_deactivate_broadcast(csys_resp):
+
+    try:
+        client = get_api()
+        infs_resp = client.service.HandleNpDeactivateBroadcast(
+            ServiceType = csys_resp['ServiceType'],
+            MessageCode = csys_resp['MessageCode'],
+            Number = csys_resp['Number'],
+            PortID = csys_resp['PortID'],
+            SubscriptionNetworkID = csys_resp['SubscriptionNetworkID'],
+            BlockID = csys_resp['SubscriptionNetworkID'],
+            OriginationID = csys_resp['OriginationID'],
+            DestinationID = csys_resp['DestinationID'],
+        )
+        if infs_resp:
+            logger.info("INFS HandleNpDeactivateBroadcast Response:")
+            logger.info(infs_resp)
+        else:
+            logger.error("INFS HandleNpDeactivateBroadcast Error:")
+        return infs_resp
+    except Exception as e:
+        logger.error("INFS HandleNpDeactivateBroadcast Error: {}".format(str(e)))
+
+def infs_handle_np_deactivate_complete(csys_resp):
+
+    try:
+        client = get_api()
+        infs_resp = client.service.HandleNpDeactivateComplete(
+            ServiceType = csys_resp['ServiceType'],
+            MessageCode = "NpDeactivateComplete",
+            Number = csys_resp['Number'],
+            PortID = csys_resp['PortID'],
+            SubscriptionNetworkID = csys_resp['SubscriptionNetworkID'],
+            BlockID = csys_resp['BlockID'],
+            OriginationID = csys_resp['OriginationID'],
+            DestinationID = csys_resp['DestinationID'],
+        )
+        if infs_resp:
+            logger.info("INFS HandleNpDeactivateComplete Response:")
+            logger.info(infs_resp)
+        else:
+            logger.error("INFS HandleNpDeactivateComplete Error:")
+        return infs_resp
+    except Exception as e:
+        logger.error("INFS HandleNpDeactivateComplete Error: {}".format(str(e)))
+
+
+def infs_handle_np_query_complete(csys_resp):
+    try:
+        client = get_api()
+        infs_resp = client.service.HandleNpQueryComplete(
+            # ServiceType = csys_resp['ServiceType'],
+            MessageCode = "NpQueryComplete",
+            Comments = "Np Query Complete",
+            OriginationID = csys_resp['OriginationID'],
+            DestinationID = csys_resp['DestinationID'],
+        )
+        logger.info("INFS HandleNpQueryComplete Response:")
+        logger.info(infs_resp)
+    except Exception as e:
+        logger.error("INFS HandleNpQueryComplete Error: {}".format(str(e)))
 
 if __name__ == "__main__":
 
     csys_resp = {
         "ServiceType" : "F",
         "MessageCode" : "MessageAck",
-        "Number" : "16511863",
-        "PortID" : "INFX-INFS-20200719-00003",
-        "SubmissionID" : "INFX-2020-07060063",
+        "Number" : "16511870",
+        "PortID" : "INFX-INFS-20200719-00024",
+        "SubmissionID" : "INFX-2020-07060070",
         "DonorID" : "INFS",
         "RecipientID" : "INFX",
         "OriginationID" : "CSYS",
-        "DestinationID" : "INFX"
+        "DestinationID" : "INFX",
+        "NewRoute" : "a03",
+        "PortingDatetime": "202007191242"
     }
 
-
+    ### Preparation
     # infs_handle_np_request(client, csys_resp)
     # infs_handle_np_request_cancel(csys_resp)
+
+    ### Execution
+    # infs_handle_np_execute_broadcast(csys_resp)
+    # infs_handle_np_execute_complete(csys_resp)
+
+    ### Deactivation
+    csys_deactivate_resp = {
+        "ServiceType" : "F",
+        "MessageCode" : "MessageAck",
+        "Number" : "16511870",
+        "PortID" : "INFS-INFX-20200719-00025",
+        "SubscriptionNetworkID" : "INFX",
+        "BlockID" : "INFS",
+        "OriginationID" : "CSYS",
+        "DestinationID" : "INFX",
+    }
+    # infs_handle_np_deactivate_complete(csys_deactivate_resp)
+
+    ###Query
+    csys_query_resp = {
+        "ServiceType" : "F",
+        "MessageCode" : "MessageAck",
+        "PortID" : "INFX-CSYS-20200720-00000",
+        "OriginationID" : "CSYS",
+        "DestinationID" : "INFX",
+    }
+    infs_handle_np_query_complete(csys_query_resp)
