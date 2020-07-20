@@ -7,7 +7,7 @@ from requests import Session
 from requests.auth import HTTPBasicAuth
 
 from np_helper import get_logger
-from infs_np_client import infs_handle_np_request, infs_handle_np_request_cancel
+from infs_np_client import *
 
 from suds.client import Client
 from suds.sax.element import Element
@@ -121,7 +121,113 @@ def np_execute_complete_from_INFS(client, request):
     infs_resp = infs_handle_np_execute_complete(csys_resp)
     logger.info(infs_resp)
 
+def np_deactivate_from_INFS(client, request):
+
+    try:
+        csys_resp = client.service.SendNpDeactivate(
+            ServiceType = request['ServiceType'],
+            MessageCode = "NpDeactivate",
+            Number = request['Number'],
+            SubscriptionNetworkID = request['SubscriptionNetworkID'],
+            BlockID = request['BlockID'],
+            OriginationID = request['OriginationID'],
+            DestinationID = request['DestinationID'],
+        )
+        logger.info("CSYS NpDeactivate Response:")
+        logger.info(csys_resp)
+    except Exception as e:
+        logger.error("CSYS NpDeactivate Error: {}".format(str(e)))
+
+def np_deactivate_complete_from_INFS(client, request):
+
+    try:
+        csys_resp = client.service.SendNpDeactivateComplete(
+            ServiceType = request['ServiceType'],
+            MessageCode = "NpDeactivateComplete",
+            Number = request['Number'],
+            PortID = request['PortID'],
+            SubscriptionNetworkID = request['SubscriptionNetworkID'],
+            BlockID = request['BlockID'],
+            OriginationID = request['OriginationID'],
+            DestinationID = request['DestinationID'],
+        )
+        if csys_resp:
+            logger.info("CSYS SendNpDeactivateComplete Response:")
+            logger.info(csys_resp)
+            infs_resp = infs_handle_np_deactivate_complete(csys_resp)
+        else:
+            logger.error("CSYS SendNpDeactivateComplete Error:")
+    except Exception as e:
+        logger.error("CSYS SendNpDeactivateComplete Error: {}".format(str(e)))
+
+def np_query_from_INFS(client, request):
+
+    try:
+        csys_resp = client.service.SendNpQuery(
+            MessageCode = "NpQuery",
+            # DateFrom = request['DateFrom'],
+            # DateTo = request['DateTo'],
+            NumberFrom = request['NumberFrom'],
+            NumberTo = request['NumberTo'],
+            OperatorID = request['OperatorID'],
+            Comments = request['Comments'],
+            OriginationID = request['OriginationID'],
+            DestinationID = request['DestinationID'],
+        )
+        logger.info("CSYS SendNpQuery Response:")
+        logger.info(csys_resp)
+    except Exception as e:
+        logger.error("CSYS SendNpQuery Error: {}".format(str(e)))
+
+def billing_resolution_from_INFS(client, request):
+
+    try:
+        csys_resp = client.service.SendNpBillingResolution(
+            ServiceType = request['ServiceType'],
+            MessageCode = "NpBillingResolution",
+            Number = request['Number'],
+            PortID = request['PortID'],
+            DonorID = request['DonorID'],
+            SubscriptionNetworkID = request['SubscriptionNetworkID'],
+            OriginationID = request['OriginationID'],
+            DestinationID = request['DestinationID'],
+        )
+        if csys_resp:
+            logger.info("CSYS SendNpBillingResolution Response:")
+            logger.info(csys_resp)
+            infs_resp = infx_handle_billing_resolution(csys_resp)
+        else:
+            logger.error("CSYS SendNpBillingResolution Error:")
+    except Exception as e:
+        logger.error("CSYS SendNpBillingResolution Error: {}".format(str(e)))
+
+def billing_resolution_end_from_INFS(client, request):
+
+    try:
+        csys_resp = client.service.SendNpBillingResolutionEnd(
+            ServiceType = request['ServiceType'],
+            MessageCode = "NpBillingResolutionEnd",
+            Number = request['Number'],
+            PortID = request['PortID'],
+            DonorID = request['DonorID'],
+            SubscriptionNetworkID = request['SubscriptionNetworkID'],
+            OriginationID = request['OriginationID'],
+            DestinationID = request['DestinationID'],
+        )
+        if csys_resp:
+            logger.info("CSYS SendNpBillingResolutionEnd Response:")
+            logger.info(csys_resp)
+            infs_resp = infx_handle_billing_resolution_end(csys_resp)
+        else:
+            logger.error("CSYS SendNpBillingResolutionEnd Error:")
+    except Exception as e:
+        logger.error("CSYS SendNpBillingResolutionEnd Error: {}".format(str(e)))
+
+
 if __name__ == "__main__":
+
+    client = get_api()
+    # print(client)
 
     request = {
         "ServiceType" : "F",
@@ -139,8 +245,53 @@ if __name__ == "__main__":
         "PortID" : "INFX-INFS-20200719-00024",
     }
 
-    client = get_api()
-    # print(client)
-    # np_request_from_INFS(client, request)
-    # np_request_cancel_from_INFS(client, request)
-    np_execute_from_INFS(client, request)
+    ### Preparation
+    # np_request_from_INFX(client, request)
+    # np_request_cancel_from_INFX(client, request)
+
+    ### Execution
+    # np_execute_from_INFX(client, request)
+    # np_execute_complete_from_INFX(client, request)
+
+    ### Deactivation
+    request_deactivate = {
+        "ServiceType" : "F",
+        "MessageCode" : "NpDeactivate",
+        "Number" : "16511870",
+        "PortID" : "INFS-INFX-20200719-00025",
+        "SubscriptionNetworkID" : "INFX",
+        "BlockID" : "INFS",
+        "OriginationID" : "INFX",
+        "DestinationID" : "CSYS",
+    }
+    # np_deactivate_from_INFX(client, request_deactivate)
+    # np_deactivate_complete_from_INFX(client, request_deactivate)
+
+    ### Query
+    request_query =  {
+        "MessageCode" : "NpQuery",
+        "DateFrom" : "202007010000",
+        "DateTo" : "202007190000",
+        "NumberFrom" : "16511860",
+        "NumberTo" : "16511870",
+        "OperatorID": "INFX",
+        "Comments": "NP Query",
+        "OriginationID" : "INFX",
+        "DestinationID" : "CSYS",
+    }
+    # np_query_from_INFX(client, request_query)
+
+    ### Billing Resolution Process
+
+    request_billing_resolution = {
+        "ServiceType" : "F",
+        "MessageCode" : "NpBillingResolution”",
+        "Number" : "16511870",
+        "PortID" : "INFX-INFS-20200719-00024",
+        "SubscriptionNetworkID" : "INFX",
+        "DonorID" : "INFS",
+        "OriginationID" : "INFS",
+        "DestinationID" : "CSYS",
+    }
+    # billing_resolution_from_INFS(client, request_billing_resolution)
+    billing_resolution_end_from_INFS(client, request_billing_resolution)

@@ -91,7 +91,7 @@ def infx_handle_np_deactivate_complete(csys_resp):
         client = get_api()
         infx_resp = client.service.HandleNpDeactivateComplete(
             ServiceType = csys_resp['ServiceType'],
-            MessageCode = "NpDeactivateComplete",
+            MessageCode = csys_resp['MessageCode'],
             Number = csys_resp['Number'],
             PortID = csys_resp['PortID'],
             SubscriptionNetworkID = csys_resp['SubscriptionNetworkID'],
@@ -114,7 +114,7 @@ def infx_handle_np_query_complete(csys_resp):
         client = get_api()
         infx_resp = client.service.HandleNpQueryComplete(
             # ServiceType = csys_resp['ServiceType'],
-            MessageCode = "NpQueryComplete",
+            MessageCode = csys_resp['MessageCode'],
             Comments = "Np Query Complete",
             OriginationID = csys_resp['OriginationID'],
             DestinationID = csys_resp['DestinationID'],
@@ -123,6 +123,45 @@ def infx_handle_np_query_complete(csys_resp):
         logger.info(infx_resp)
     except Exception as e:
         logger.error("INFX HandleNpQueryComplete Error: {}".format(str(e)))
+
+
+def infx_handle_billing_resolution(csys_resp):
+
+    try:
+        client = get_api()
+        infx_resp = client.service.HandleNpBillingResolution(
+            ServiceType = csys_resp['ServiceType'],
+            MessageCode = csys_resp['MessageCode'],
+            # Number = csys_resp['Number'],
+            PortID = csys_resp['PortID'],
+            # DonorID = csys_resp['DonorID'],
+            # SubscriptionNetworkID = csys_resp['SubscriptionNetworkID'],
+            OriginationID = csys_resp['OriginationID'],
+            DestinationID = csys_resp['DestinationID'],
+        )
+        logger.info("INFX HandleNpBillingResolution Response:")
+        logger.info(infx_resp)
+    except Exception as e:
+        logger.error("INFX HandleNpBillingResolution Error: {}".format(str(e)))
+
+def infx_handle_billing_resolution_end(csys_resp):
+
+    try:
+        client = get_api()
+        infx_resp = client.service.HandleNpBillingResolutionEnd(
+            ServiceType = csys_resp['ServiceType'],
+            MessageCode = csys_resp['MessageCode'],
+            # Number = csys_resp['Number'],
+            PortID = csys_resp['PortID'],
+            # DonorID = csys_resp['DonorID'],
+            # SubscriptionNetworkID = csys_resp['SubscriptionNetworkID'],
+            OriginationID = csys_resp['OriginationID'],
+            DestinationID = csys_resp['DestinationID'],
+        )
+        logger.info("INFX HandleNpBillingResolutionEnd Response:")
+        logger.info(infx_resp)
+    except Exception as e:
+        logger.error("INFX HandleNpBillingResolutionEnd Error: {}".format(str(e)))
 
 
 if __name__ == "__main__":
@@ -169,3 +208,14 @@ if __name__ == "__main__":
         "DestinationID" : "INFX",
     }
     infx_handle_np_query_complete(csys_query_resp)
+
+    ### Billing Resolution
+    csys_billing_resp = {
+        "ServiceType" : "F",
+        "MessageCode" : "MessageAck",
+        "PortID" : "INFX-INFS-20200719-00024",
+        "OriginationID" : "CSYS",
+        "DestinationID" : "INFS",
+    }
+    # infx_handle_billing_resolution(csys_resp)
+    infx_handle_billing_resolution_end(csys_resp)

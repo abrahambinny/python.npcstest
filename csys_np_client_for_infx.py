@@ -190,6 +190,29 @@ def np_query_from_INFX(client, request):
     except Exception as e:
         logger.error("CSYS SendNpQuery Error: {}".format(str(e)))
 
+
+def billing_resolution_received_from_INFX(client, request):
+
+    try:
+        csys_resp = client.service.SendNpBillingResolutionReceived(
+            ServiceType = request['ServiceType'],
+            MessageCode = "NpBillingResolutionReceived",
+            Number = request['Number'],
+            PortID = request['PortID'],
+            DonorID = request['DonorID'],
+            SubscriptionNetworkID = request['SubscriptionNetworkID'],
+            OriginationID = request['OriginationID'],
+            DestinationID = request['DestinationID'],
+        )
+        if csys_resp:
+            logger.info("CSYS SendNpBillingResolutionReceived Response:")
+            logger.info(csys_resp)
+            infs_resp = infs_handle_billing_resolution_received(csys_resp)
+        else:
+            logger.error("CSYS SendNpBillingResolutionReceived Error:")
+    except Exception as e:
+        logger.error("CSYS SendNpBillingResolutionReceived Error: {}".format(str(e)))
+
 if __name__ == "__main__":
 
     client = get_api()
@@ -245,4 +268,18 @@ if __name__ == "__main__":
         "OriginationID" : "INFX",
         "DestinationID" : "CSYS",
     }
-    np_query_from_INFX(client, request_query)
+    # np_query_from_INFX(client, request_query)
+
+
+    ### Billing Resolution Process
+    request_billing_resolution = {
+        "ServiceType" : "F",
+        "MessageCode" : "NpBillingResolutionReceived”",
+        "Number" : "16511870",
+        "PortID" : "INFX-INFS-20200719-00024",
+        "SubscriptionNetworkID" : "INFX",
+        "DonorID" : "INFS",
+        "OriginationID" : "INFX",
+        "DestinationID" : "CSYS",
+    }
+    billing_resolution_received_from_INFX(client, request_billing_resolution)
