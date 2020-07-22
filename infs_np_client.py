@@ -19,6 +19,9 @@ PASSWORD = "76Hu25ZPNJzJ2k2N"
 
 logger = get_logger("INFS_CLIENT")
 
+logger.info(API_URL)
+logger.info(USERNAME)
+
 def get_api():
 
     try:
@@ -31,6 +34,7 @@ def get_api():
     client = Client(API_URL, username=USERNAME, password=PASSWORD, headers = {'username': USERNAME, 'password': PASSWORD})
     client.set_options(location=API_URL, soapheaders=(USERNAME, PASSWORD))
 
+    # logger.info(client)
     return client
 
 
@@ -145,6 +149,7 @@ def infs_handle_np_execute_complete(csys_resp):
 def infs_handle_np_deactivate_broadcast(csys_resp):
 
     try:
+        print(csys_resp)
         client = get_api()
         infs_resp = client.service.HandleNpDeactivateBroadcast(
             ServiceType = csys_resp['ServiceType'],
@@ -152,7 +157,7 @@ def infs_handle_np_deactivate_broadcast(csys_resp):
             Number = csys_resp['Number'],
             PortID = csys_resp['PortID'],
             SubscriptionNetworkID = csys_resp['SubscriptionNetworkID'],
-            BlockID = csys_resp['SubscriptionNetworkID'],
+            BlockID = csys_resp['BlockID'],
             OriginationID = csys_resp['OriginationID'],
             DestinationID = csys_resp['DestinationID'],
         )
@@ -218,19 +223,21 @@ def infs_handle_billing_resolution_received(csys_resp):
             OriginationID = csys_resp['OriginationID'],
             DestinationID = csys_resp['DestinationID'],
         )
-        logger.info("INFX HandleNpBillingResolution Response:")
+        logger.info("INFS HandleNpBillingResolution Response:")
         logger.info(infx_resp)
     except Exception as e:
-        logger.error("INFX HandleNpBillingResolution Error: {}".format(str(e)))
+        logger.error("INFS HandleNpBillingResolution Error: {}".format(str(e)))
 
 if __name__ == "__main__":
+
+    # print(get_api())
 
     csys_resp = {
         "ServiceType" : "F",
         "MessageCode" : "MessageAck",
-        "Number" : "16511870",
-        "PortID" : "INFX-INFS-20200719-00024",
-        "SubmissionID" : "INFX-2020-07060070",
+        "Number" : "16511871",
+        "PortID" : "INFX-INFS-20200720-00004",
+        "SubmissionID" : "INFX-2020-07060071",
         "DonorID" : "INFS",
         "RecipientID" : "INFX",
         "OriginationID" : "CSYS",
@@ -250,25 +257,26 @@ if __name__ == "__main__":
     ### Deactivation
     csys_deactivate_resp = {
         "ServiceType" : "F",
-        "MessageCode" : "MessageAck",
-        "Number" : "16511870",
-        "PortID" : "INFS-INFX-20200719-00025",
+        "MessageCode" : "NpDeactivateAck",
+        "Number" : "16511871",
+        "PortID" : "INFS-INFX-20200721-00000",
         "SubscriptionNetworkID" : "INFX",
         "BlockID" : "INFS",
         "OriginationID" : "CSYS",
         "DestinationID" : "INFX",
     }
+    # infs_handle_np_deactivate_broadcast(csys_deactivate_resp)
     # infs_handle_np_deactivate_complete(csys_deactivate_resp)
 
     ###Query
     csys_query_resp = {
         "ServiceType" : "F",
         "MessageCode" : "MessageAck",
-        "PortID" : "INFX-CSYS-20200720-00000",
+        "PortID" : "INFS-CSYS-20200721-00002",
         "OriginationID" : "CSYS",
         "DestinationID" : "INFX",
     }
-    # infs_handle_np_query_complete(csys_query_resp)
+    infs_handle_np_query_complete(csys_query_resp)
 
     ### Billing Resolution
     csys_billing_resp = {
@@ -278,4 +286,4 @@ if __name__ == "__main__":
         "OriginationID" : "CSYS",
         "DestinationID" : "INFX",
     }
-    infs_handle_billing_resolution_received(csys_resp)
+    # infs_handle_billing_resolution_received(csys_resp)

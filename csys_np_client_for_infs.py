@@ -7,7 +7,7 @@ from requests import Session
 from requests.auth import HTTPBasicAuth
 
 from np_helper import get_logger
-from infs_np_client import *
+from infx_np_client import *
 
 from suds.client import Client
 from suds.sax.element import Element
@@ -20,6 +20,9 @@ USERNAME = "soap_infs"
 PASSWORD = "soap_infs"
 
 logger = get_logger("CSYS_CLIENT_FOR_INFS")
+
+logger.info(API_URL)
+logger.info(USERNAME)
 
 def get_api():
 
@@ -59,7 +62,7 @@ def np_request_from_INFS(client, request):
         if (csys_resp):
             logger.info("CSYS SendNpRequest Response:")
             logger.info(csys_resp)
-            infs_resp = infs_handle_np_request(csys_resp)
+            infx_resp = infx_handle_np_request(csys_resp)
         else:
             logger.error("CSYS SendNpRequest Error:")
     except Exception as e:
@@ -83,7 +86,7 @@ def np_request_cancel_from_INFS(client, request):
         if csys_resp:
             logger.info("CSYS SendNpRequestCancel Response:")
             logger.info(csys_resp)
-            infs_resp = infs_handle_np_request_cancel(csys_resp)
+            infx_resp = infx_handle_np_request_cancel(csys_resp)
         else:
             logger.error("CSYS SendNpRequestCancel Error:")
     except Exception as e:
@@ -92,34 +95,47 @@ def np_request_cancel_from_INFS(client, request):
 
 def np_execute_from_INFS(client, request):
 
-    csys_resp = client.service.SendNpExecute(
-        ServiceType = request['ServiceType'],
-        MessageCode = "NpExecute",
-        Number = request['Number'],
-        PortID = request['PortID'],
-        DonorID = request['DonorID'],
-        RecipientID = request['RecipientID'],
-        OriginationID = request['OriginationID'],
-        DestinationID = request['DestinationID'],
-    )
-    logger.info(csys_resp)
+    try:
+        csys_resp = client.service.SendNpExecute(
+            ServiceType = request['ServiceType'],
+            MessageCode = "NpExecute",
+            Number = request['Number'],
+            PortID = request['PortID'],
+            DonorID = request['DonorID'],
+            RecipientID = request['RecipientID'],
+            OriginationID = request['OriginationID'],
+            DestinationID = request['DestinationID'],
+        )
+        if csys_resp:
+            logger.info("CSYS SendNpExecute Response:")
+            logger.info(csys_resp)
+        else:
+            logger.error("CSYS SendNpExecute Error:")
+    except Exception as e:
+        logger.error("CSYS SendNpExecute Error: {}".format(str(e)))
 
 
 def np_execute_complete_from_INFS(client, request):
 
-    csys_resp = client.service.SendNpExecuteComplete(
-        ServiceType = request['ServiceType'],
-        MessageCode = "NpExecuteComplete",
-        Number = request['Number'],
-        PortID = request['PortID'],
-        DonorID = request['DonorID'],
-        RecipientID = request['RecipientID'],
-        OriginationID = request['OriginationID'],
-        DestinationID = request['DestinationID'],
-    )
-    logger.info(csys_resp)
-    infs_resp = infs_handle_np_execute_complete(csys_resp)
-    logger.info(infs_resp)
+    try:
+        csys_resp = client.service.SendNpExecuteComplete(
+            ServiceType = request['ServiceType'],
+            MessageCode = "NpExecuteComplete",
+            Number = request['Number'],
+            PortID = request['PortID'],
+            DonorID = request['DonorID'],
+            RecipientID = request['RecipientID'],
+            OriginationID = request['OriginationID'],
+            DestinationID = request['DestinationID'],
+        )
+        if csys_resp:
+            logger.info("CSYS SendNpExecuteComplete Response:")
+            logger.info(csys_resp)
+            # infx_resp = infx_handle_np_execute_complete(csys_resp)
+        else:
+            logger.error("CSYS SendNpExecuteComplete Error:")
+    except Exception as e:
+        logger.error("CSYS SendNpExecuteComplete Error: {}".format(str(e)))
 
 def np_deactivate_from_INFS(client, request):
 
@@ -154,7 +170,7 @@ def np_deactivate_complete_from_INFS(client, request):
         if csys_resp:
             logger.info("CSYS SendNpDeactivateComplete Response:")
             logger.info(csys_resp)
-            infs_resp = infs_handle_np_deactivate_complete(csys_resp)
+            infx_resp = infx_handle_np_deactivate_complete(csys_resp)
         else:
             logger.error("CSYS SendNpDeactivateComplete Error:")
     except Exception as e:
@@ -195,7 +211,7 @@ def billing_resolution_from_INFS(client, request):
         if csys_resp:
             logger.info("CSYS SendNpBillingResolution Response:")
             logger.info(csys_resp)
-            infs_resp = infx_handle_billing_resolution(csys_resp)
+            infx_resp = infx_handle_billing_resolution(csys_resp)
         else:
             logger.error("CSYS SendNpBillingResolution Error:")
     except Exception as e:
@@ -217,7 +233,7 @@ def billing_resolution_end_from_INFS(client, request):
         if csys_resp:
             logger.info("CSYS SendNpBillingResolutionEnd Response:")
             logger.info(csys_resp)
-            infs_resp = infx_handle_billing_resolution_end(csys_resp)
+            infx_resp = infx_handle_billing_resolution_end(csys_resp)
         else:
             logger.error("CSYS SendNpBillingResolutionEnd Error:")
     except Exception as e:
@@ -232,17 +248,17 @@ if __name__ == "__main__":
     request = {
         "ServiceType" : "F",
         "MessageCode" : "NpRequest",
-        "Number" : "16511870",
-        "SubmissionID" : "INFX-2020-07060070",
+        "Number" : "16511871",
+        "SubmissionID" : "INFX-2020-07060071",
         "DonorID" : "INFS",
         "RecipientID" : "INFX",
         "CompanyFlag" : "Y",
         "CPR" : "123456789",
         "CommercialRegNumber" : "12345/0",
         "Comments" : "NP Request",
-        "OriginationID" : "INFX",
+        "OriginationID" : "INFS",
         "DestinationID" : "CSYS",
-        "PortID" : "INFX-INFS-20200719-00024",
+        "PortID" : "INFX-INFS-20200720-00004",
     }
 
     ### Preparation
@@ -250,48 +266,48 @@ if __name__ == "__main__":
     # np_request_cancel_from_INFX(client, request)
 
     ### Execution
-    # np_execute_from_INFX(client, request)
-    # np_execute_complete_from_INFX(client, request)
+    # np_execute_from_INFS(client, request)
+    # np_execute_complete_from_INFS(client, request)
 
     ### Deactivation
     request_deactivate = {
         "ServiceType" : "F",
         "MessageCode" : "NpDeactivate",
-        "Number" : "16511870",
-        "PortID" : "INFS-INFX-20200719-00025",
+        "Number" : "16511871",
+        "PortID" : "INFS-INFX-20200721-00000",
         "SubscriptionNetworkID" : "INFX",
         "BlockID" : "INFS",
-        "OriginationID" : "INFX",
+        "OriginationID" : "INFS",
         "DestinationID" : "CSYS",
     }
-    # np_deactivate_from_INFX(client, request_deactivate)
-    # np_deactivate_complete_from_INFX(client, request_deactivate)
+    # np_deactivate_from_INFS(client, request_deactivate)
+    # np_deactivate_complete_from_INFS(client, request_deactivate)
 
     ### Query
     request_query =  {
         "MessageCode" : "NpQuery",
-        "DateFrom" : "202007010000",
-        "DateTo" : "202007190000",
+        "DateFrom" : "202007190000",
+        "DateTo" : "202007220000",
         "NumberFrom" : "16511860",
-        "NumberTo" : "16511870",
+        "NumberTo" : "16511871",
         "OperatorID": "INFX",
         "Comments": "NP Query",
-        "OriginationID" : "INFX",
+        "OriginationID" : "INFS",
         "DestinationID" : "CSYS",
     }
-    # np_query_from_INFX(client, request_query)
+    # np_query_from_INFS(client, request_query)
 
     ### Billing Resolution Process
 
     request_billing_resolution = {
         "ServiceType" : "F",
         "MessageCode" : "NpBillingResolution”",
-        "Number" : "16511870",
-        "PortID" : "INFX-INFS-20200719-00024",
+        "Number" : "16511871",
+        "PortID" : "INFS-INFX-20200721-00000",
         "SubscriptionNetworkID" : "INFX",
         "DonorID" : "INFS",
         "OriginationID" : "INFS",
         "DestinationID" : "CSYS",
     }
-    # billing_resolution_from_INFS(client, request_billing_resolution)
-    billing_resolution_end_from_INFS(client, request_billing_resolution)
+    billing_resolution_from_INFS(client, request_billing_resolution)
+    # billing_resolution_end_from_INFS(client, request_billing_resolution)

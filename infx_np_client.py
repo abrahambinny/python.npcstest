@@ -16,9 +16,11 @@ from suds import WebFault
 API_URL = "https://10.1.3.95:8005/spservice/service?wsdl"
 USERNAME = "soap_csys_infx"
 PASSWORD = "UCkW7QuxAonKwGdr"
-appname = "INFX_CLIENT"
 
-logger = get_logger(appname)
+logger = get_logger("INFX_CLIENT")
+
+logger.info(API_URL)
+logger.info(USERNAME)
 
 def get_api():
 
@@ -52,13 +54,13 @@ def infx_handle_np_execute_broadcast(csys_resp):
             DestinationID = csys_resp['DestinationID'],
         )
         if infs_resp:
-            logger.info("INFX HandleNpExecuteComplete Response:")
+            logger.info("INFX HandleNpExecuteBroadcast Response:")
             logger.info(infs_resp)
         else:
-            logger.error("INFX HandleNpExecuteComplete Error:")
+            logger.error("INFX HandleNpExecuteBroadcast Error:")
         return infs_resp
     except Exception as e:
-        logger.error("INFX HandleNpExecuteComplete Error: {}".format(str(e)))
+        logger.error("INFX HandleNpExecuteBroadcast Error: {}".format(str(e)))
 
 
 def infx_handle_np_execute_complete(csys_resp):
@@ -92,10 +94,10 @@ def infx_handle_np_deactivate_complete(csys_resp):
         infx_resp = client.service.HandleNpDeactivateComplete(
             ServiceType = csys_resp['ServiceType'],
             MessageCode = csys_resp['MessageCode'],
-            Number = csys_resp['Number'],
+            # Number = csys_resp['Number'],
             PortID = csys_resp['PortID'],
-            SubscriptionNetworkID = csys_resp['SubscriptionNetworkID'],
-            BlockID = csys_resp['BlockID'],
+            # SubscriptionNetworkID = csys_resp['SubscriptionNetworkID'],
+            # BlockID = csys_resp['BlockID'],
             OriginationID = csys_resp['OriginationID'],
             DestinationID = csys_resp['DestinationID'],
         )
@@ -169,9 +171,9 @@ if __name__ == "__main__":
     csys_resp = {
         "ServiceType" : "F",
         "MessageCode" : "MessageAck",
-        "Number" : "16511870",
-        "PortID" : "INFX-INFS-20200719-00024",
-        "SubmissionID" : "INFX-2020-07060070",
+        "Number" : "16511871",
+        "PortID" : "INFX-INFS-20200720-00004",
+        "SubmissionID" : "INFX-2020-07060071",
         "DonorID" : "INFS",
         "RecipientID" : "INFX",
         "OriginationID" : "CSYS",
@@ -183,31 +185,31 @@ if __name__ == "__main__":
 
     # infx_handle_np_request(client, csys_resp)
     # infx_handle_np_request_cancel(csys_resp)
-    # infs_handle_np_execute_broadcast(csys_resp)
+    # infx_handle_np_execute_broadcast(csys_resp)
     # infx_handle_np_execute_complete(csys_resp)
 
     ### Deactivation
     csys_deactivate_resp = {
         "ServiceType" : "F",
         "MessageCode" : "MessageAck",
-        "Number" : "16511870",
-        "PortID" : "INFS-INFX-20200719-00025",
+        "Number" : "16511871",
+        "PortID" : "INFS-INFX-20200721-00000",
         "SubscriptionNetworkID" : "INFX",
         "BlockID" : "INFS",
         "OriginationID" : "CSYS",
         "DestinationID" : "INFX",
     }
-    # infx_handle_np_deactivate_complete(csys_deactivate_resp)
+    infx_handle_np_deactivate_complete(csys_deactivate_resp)
 
     ###Query
     csys_query_resp = {
         "ServiceType" : "F",
         "MessageCode" : "MessageAck",
-        "PortID" : "INFX-CSYS-20200720-00000",
+        "PortID" : "INFX-CSYS-20200721-00001",
         "OriginationID" : "CSYS",
         "DestinationID" : "INFX",
     }
-    infx_handle_np_query_complete(csys_query_resp)
+    # infx_handle_np_query_complete(csys_query_resp)
 
     ### Billing Resolution
     csys_billing_resp = {
@@ -218,4 +220,4 @@ if __name__ == "__main__":
         "DestinationID" : "INFS",
     }
     # infx_handle_billing_resolution(csys_resp)
-    infx_handle_billing_resolution_end(csys_resp)
+    # infx_handle_billing_resolution_end(csys_resp)

@@ -21,6 +21,9 @@ PASSWORD = "soap_infx"
 
 logger = get_logger("CSYS_CLIENT_FOR_INFX")
 
+logger.info(API_URL)
+logger.info(USERNAME)
+
 def get_api():
 
     try:
@@ -221,8 +224,8 @@ if __name__ == "__main__":
     request = {
         "ServiceType" : "F",
         "MessageCode" : "NpRequest",
-        "Number" : "16511870",
-        "SubmissionID" : "INFX-2020-07060070",
+        "Number" : "16511871",
+        "SubmissionID" : "INFX-2020-07060071",
         "DonorID" : "INFS",
         "RecipientID" : "INFX",
         "CompanyFlag" : "Y",
@@ -231,7 +234,7 @@ if __name__ == "__main__":
         "Comments" : "NP Request",
         "OriginationID" : "INFX",
         "DestinationID" : "CSYS",
-        "PortID" : "INFX-INFS-20200719-00024",
+        "PortID" : "INFX-INFS-20200720-00004",
     }
 
     ### Preparation
@@ -246,8 +249,8 @@ if __name__ == "__main__":
     request_deactivate = {
         "ServiceType" : "F",
         "MessageCode" : "NpDeactivate",
-        "Number" : "16511870",
-        "PortID" : "INFS-INFX-20200719-00025",
+        "Number" : "16511871",
+        "PortID" : "INFX-INFS-20200720-00004",
         "SubscriptionNetworkID" : "INFX",
         "BlockID" : "INFS",
         "OriginationID" : "INFX",
@@ -259,16 +262,16 @@ if __name__ == "__main__":
     ### Query
     request_query =  {
         "MessageCode" : "NpQuery",
-        "DateFrom" : "202007010000",
-        "DateTo" : "202007190000",
+        "DateFrom" : "202007190000",
+        "DateTo" : "202007220000",
         "NumberFrom" : "16511860",
-        "NumberTo" : "16511870",
+        "NumberTo" : "16511871",
         "OperatorID": "INFX",
         "Comments": "NP Query",
         "OriginationID" : "INFX",
         "DestinationID" : "CSYS",
     }
-    # np_query_from_INFX(client, request_query)
+    np_query_from_INFX(client, request_query)
 
 
     ### Billing Resolution Process
@@ -282,4 +285,4 @@ if __name__ == "__main__":
         "OriginationID" : "INFX",
         "DestinationID" : "CSYS",
     }
-    billing_resolution_received_from_INFX(client, request_billing_resolution)
+    # billing_resolution_received_from_INFX(client, request_billing_resolution)
