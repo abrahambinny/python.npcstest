@@ -248,8 +248,8 @@ if __name__ == "__main__":
     request = {
         "ServiceType" : "F",
         "MessageCode" : "NpRequest",
-        "Number" : "16511871",
-        "SubmissionID" : "INFX-2020-07060071",
+        "Number" : "16511874",
+        "SubmissionID" : "INFX-2020-07060074",
         "DonorID" : "INFS",
         "RecipientID" : "INFX",
         "CompanyFlag" : "Y",
@@ -258,12 +258,12 @@ if __name__ == "__main__":
         "Comments" : "NP Request",
         "OriginationID" : "INFS",
         "DestinationID" : "CSYS",
-        "PortID" : "INFX-INFS-20200720-00004",
+        "PortID" : "INFX-INFS-20200726-00011",
     }
 
     ### Preparation
-    # np_request_from_INFX(client, request)
-    # np_request_cancel_from_INFX(client, request)
+    # np_request_from_INFS(client, request)
+    # np_request_cancel_from_INFS(client, request)
 
     ### Execution
     # np_execute_from_INFS(client, request)
@@ -273,8 +273,8 @@ if __name__ == "__main__":
     request_deactivate = {
         "ServiceType" : "F",
         "MessageCode" : "NpDeactivate",
-        "Number" : "16511871",
-        "PortID" : "INFS-INFX-20200721-00000",
+        "Number" : "16511874",
+        "PortID" : "INFS-INFX-20200726-00012",
         "SubscriptionNetworkID" : "INFX",
         "BlockID" : "INFS",
         "OriginationID" : "INFS",
@@ -289,7 +289,7 @@ if __name__ == "__main__":
         "DateFrom" : "202007190000",
         "DateTo" : "202007220000",
         "NumberFrom" : "16511860",
-        "NumberTo" : "16511871",
+        "NumberTo" : "16511880",
         "OperatorID": "INFX",
         "Comments": "NP Query",
         "OriginationID" : "INFS",
@@ -302,8 +302,8 @@ if __name__ == "__main__":
     request_billing_resolution = {
         "ServiceType" : "F",
         "MessageCode" : "NpBillingResolution”",
-        "Number" : "16511871",
-        "PortID" : "INFS-INFX-20200721-00000",
+        "Number" : "16511874",
+        "PortID" : "INFS-INFX-20200726-00012",
         "SubscriptionNetworkID" : "INFX",
         "DonorID" : "INFS",
         "OriginationID" : "INFS",

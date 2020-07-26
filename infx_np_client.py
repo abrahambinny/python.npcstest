@@ -171,9 +171,9 @@ if __name__ == "__main__":
     csys_resp = {
         "ServiceType" : "F",
         "MessageCode" : "MessageAck",
-        "Number" : "16511871",
-        "PortID" : "INFX-INFS-20200720-00004",
-        "SubmissionID" : "INFX-2020-07060071",
+        "Number" : "16511874",
+        "PortID" : "INFX-INFS-20200726-00011",
+        "SubmissionID" : "INFX-2020-07060074",
         "DonorID" : "INFS",
         "RecipientID" : "INFX",
         "OriginationID" : "CSYS",
@@ -199,13 +199,13 @@ if __name__ == "__main__":
         "OriginationID" : "CSYS",
         "DestinationID" : "INFX",
     }
-    infx_handle_np_deactivate_complete(csys_deactivate_resp)
+    # infx_handle_np_deactivate_complete(csys_deactivate_resp)
 
     ###Query
     csys_query_resp = {
         "ServiceType" : "F",
         "MessageCode" : "MessageAck",
-        "PortID" : "INFX-CSYS-20200721-00001",
+        "PortID" : "NFS-CSYS-20200726-00013",
         "OriginationID" : "CSYS",
         "DestinationID" : "INFX",
     }
