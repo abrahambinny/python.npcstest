@@ -128,7 +128,7 @@ def np_execute_complete_from_INFX(client, request):
         if csys_resp:
             logger.info("CSYS SendNpExecuteComplete Response:")
             logger.info(csys_resp)
-            infs_resp = infs_handle_np_execute_complete(csys_resp)
+            # infs_resp = infs_handle_np_execute_complete(csys_resp)
         else:
             logger.error("CSYS SendNpExecuteComplete Error:")
     except Exception as e:
@@ -224,8 +224,8 @@ if __name__ == "__main__":
     request = {
         "ServiceType" : "F",
         "MessageCode" : "NpRequest",
-        "Number" : "16511874",
-        "SubmissionID" : "INFX-2020-07060074",
+        "Number" : "16511876",
+        "SubmissionID" : "INFX-2020-07060076",
         "DonorID" : "INFS",
         "RecipientID" : "INFX",
         "CompanyFlag" : "Y",
@@ -234,7 +234,7 @@ if __name__ == "__main__":
         "Comments" : "NP Request",
         "OriginationID" : "INFX",
         "DestinationID" : "CSYS",
-        "PortID" : "INFX-INFS-20200726-00011",
+        "PortID" : "INFX-INFS-20200727-00004",
     }
 
     ### Preparation
@@ -243,7 +243,7 @@ if __name__ == "__main__":
 
     ### Execution
     # np_execute_from_INFX(client, request)
-    # np_execute_complete_from_INFX(client, request)
+    np_execute_complete_from_INFX(client, request)
 
     ### Deactivation
     request_deactivate = {

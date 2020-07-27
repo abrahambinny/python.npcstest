@@ -235,9 +235,9 @@ if __name__ == "__main__":
     csys_resp = {
         "ServiceType" : "F",
         "MessageCode" : "MessageAck",
-        "Number" : "16511874",
-        "PortID" : "INFX-INFS-20200726-00011",
-        "SubmissionID" : "INFX-2020-07060074",
+        "Number" : "16511876",
+        "PortID" : "INFX-INFS-20200727-00004",
+        "SubmissionID" : "INFX-2020-07260076",
         "DonorID" : "INFS",
         "RecipientID" : "INFX",
         "OriginationID" : "CSYS",

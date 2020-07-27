@@ -228,9 +228,9 @@ if __name__ == "__main__":
     csys_resp = {
         "ServiceType" : "F",
         "MessageCode" : "MessageAck",
-        "Number" : "16511872",
-        "PortID" : "INFS-INFS-20200727-00001",
-        "SubmissionID" : "INFX-2020-07260072",
+        "Number" : "16511876",
+        "PortID" : "INFX-INFS-20200727-00004",
+        "SubmissionID" : "INFX-2020-07260076",
         "DonorID" : "INFS",
         "RecipientID" : "INFX",
         "OriginationID" : "CSYS",
@@ -240,10 +240,10 @@ if __name__ == "__main__":
     }
 
 
-    infx_handle_np_request(csys_resp)
+    # infx_handle_np_request(csys_resp)
     # infx_handle_np_request_cancel(csys_resp)
     # infx_handle_np_execute_broadcast(csys_resp)
-    # infx_handle_np_execute_complete(csys_resp)
+    infx_handle_np_execute_complete(csys_resp)
 
     ### Deactivation
     csys_deactivate_resp = {

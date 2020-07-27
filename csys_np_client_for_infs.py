@@ -248,8 +248,8 @@ if __name__ == "__main__":
     request = {
         "ServiceType" : "F",
         "MessageCode" : "NpRequest",
-        "Number" : "16511872",
-        "SubmissionID" : "INFX-2020-07260072",
+        "Number" : "16511876",
+        "SubmissionID" : "INFX-2020-07060076",
         "DonorID" : "INFS",
         "RecipientID" : "INFX",
         "CompanyFlag" : "Y",
@@ -258,11 +258,11 @@ if __name__ == "__main__":
         "Comments" : "NP Request",
         "OriginationID" : "INFS",
         "DestinationID" : "CSYS",
-        "PortID" : "INFX-INFS-20200726-00072",
+        "PortID" : "INFX-INFS-20200727-00004",
     }
 
     ### Preparation
-    np_request_from_INFS(client, request)
+    # np_request_from_INFS(client, request)
     # np_request_cancel_from_INFS(client, request)
 
     ### Execution
@@ -302,12 +302,12 @@ if __name__ == "__main__":
     request_billing_resolution = {
         "ServiceType" : "F",
         "MessageCode" : "NpBillingResolution”",
-        "Number" : "16511874",
-        "PortID" : "INFS-INFX-20200726-00012",
+        "Number" : "16511876",
+        "PortID" : "INFX-INFS-20200727-00004",
         "SubscriptionNetworkID" : "INFX",
         "DonorID" : "INFS",
         "OriginationID" : "INFS",
         "DestinationID" : "CSYS",
     }
-    # billing_resolution_from_INFS(client, request_billing_resolution)
+    billing_resolution_from_INFS(client, request_billing_resolution)
     # billing_resolution_end_from_INFS(client, request_billing_resolution)
