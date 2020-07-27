@@ -37,6 +37,63 @@ def get_api():
     return client
 
 
+def infx_handle_np_request(csys_resp):
+
+    try:
+        client = get_api()
+        infs_resp = client.service.HandleNpRequest(
+            ServiceType = csys_resp['ServiceType'],
+            MessageCode = csys_resp['MessageCode'],
+            Number = csys_resp['Number'],
+            PortID = csys_resp['PortID'],
+            SubmissionID = csys_resp['SubmissionID'],
+            DonorID = csys_resp['DonorID'],
+            RecipientID = csys_resp['RecipientID'],
+            SimCardNumber = '',
+            CompanyFlag = '',
+            CPR = '',
+            CommercialRegNumber = '',
+            PassportNumber = '',
+            GCCID = '',
+            Comments = 'Response from csys',
+            OriginationID = csys_resp['OriginationID'],
+            DestinationID = csys_resp['DestinationID'],
+        )
+        if infs_resp:
+            logger.info("INFX HandleNpRequest Response:")
+            logger.info(infs_resp)
+        else:
+            logger.error("INFX HandleNpRequest Error:")
+        return infs_resp
+    except Exception as e:
+        logger.error("INFX HandleNpRequest Error: {}".format(str(e)))
+
+
+def infx_handle_np_request_cancel(csys_resp):
+
+    try:
+        client = get_api()
+        infs_resp = client.service.HandleNpRequestCancel(
+            ServiceType = csys_resp['ServiceType'],
+            MessageCode = csys_resp['MessageCode'],
+            PortID = csys_resp['PortID'],
+            OriginationID = csys_resp['OriginationID'],
+            DestinationID = csys_resp['DestinationID'],
+            # Number = csys_resp['Number'],
+            # SubmissionID = csys_resp['SubmissionID'],
+            # DonorID = csys_resp['DonorID'],
+            # RecipientID = csys_resp['RecipientID'],
+        )
+        if infs_resp:
+            logger.info("INFX HandleNpRequestCancel Response:")
+            logger.info(infs_resp)
+        else:
+            logger.error("INFX HandleNpRequestCancel Error:")
+        return infs_resp
+    except Exception as e:
+        logger.error("INFX HandleNpRequestCancel Error: {}".format(str(e)))
+
+
 def infx_handle_np_execute_broadcast(csys_resp):
 
     try:
@@ -171,9 +228,9 @@ if __name__ == "__main__":
     csys_resp = {
         "ServiceType" : "F",
         "MessageCode" : "MessageAck",
-        "Number" : "16511874",
-        "PortID" : "INFX-INFS-20200726-00011",
-        "SubmissionID" : "INFX-2020-07060074",
+        "Number" : "16511872",
+        "PortID" : "INFS-INFS-20200727-00001",
+        "SubmissionID" : "INFX-2020-07260072",
         "DonorID" : "INFS",
         "RecipientID" : "INFX",
         "OriginationID" : "CSYS",
@@ -183,7 +240,7 @@ if __name__ == "__main__":
     }
 
 
-    # infx_handle_np_request(client, csys_resp)
+    infx_handle_np_request(csys_resp)
     # infx_handle_np_request_cancel(csys_resp)
     # infx_handle_np_execute_broadcast(csys_resp)
     # infx_handle_np_execute_complete(csys_resp)
