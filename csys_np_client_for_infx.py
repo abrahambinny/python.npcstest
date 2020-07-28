@@ -278,11 +278,11 @@ if __name__ == "__main__":
     request_billing_resolution = {
         "ServiceType" : "F",
         "MessageCode" : "NpBillingResolutionReceived”",
-        "Number" : "16511874",
-        "PortID" : "INFS-INFX-20200726-00012",
+        "Number" : "16511876",
+        "PortID" : "INFX-INFS-20200727-00004",
         "SubscriptionNetworkID" : "INFX",
         "DonorID" : "INFS",
         "OriginationID" : "INFX",
         "DestinationID" : "CSYS",
     }
-    # billing_resolution_received_from_INFX(client, request_billing_resolution)
+    billing_resolution_received_from_INFX(client, request_billing_resolution)

@@ -272,9 +272,9 @@ if __name__ == "__main__":
     csys_billing_resp = {
         "ServiceType" : "F",
         "MessageCode" : "MessageAck",
-        "PortID" : "INFX-INFS-20200719-00024",
+        "PortID" : "INFX-INFS-20200727-00004",
         "OriginationID" : "CSYS",
         "DestinationID" : "INFS",
     }
     # infx_handle_billing_resolution(csys_resp)
-    # infx_handle_billing_resolution_end(csys_resp)
+    infx_handle_billing_resolution_end(csys_resp)

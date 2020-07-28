@@ -309,5 +309,5 @@ if __name__ == "__main__":
         "OriginationID" : "INFS",
         "DestinationID" : "CSYS",
     }
-    billing_resolution_from_INFS(client, request_billing_resolution)
+    # billing_resolution_from_INFS(client, request_billing_resolution)
     # billing_resolution_end_from_INFS(client, request_billing_resolution)
