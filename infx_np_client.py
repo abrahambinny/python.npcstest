@@ -15,7 +15,7 @@ from suds import WebFault
 
 API_URL = "https://10.1.3.95:8005/spservice/service?wsdl"
 USERNAME = "soap_csys_infx"
-PASSWORD = "UCkW7QuxAonKwGdr"
+PASSWORD = "76Hu25ZPNJzJ2k2N"
 
 logger = get_logger("INFX_CLIENT")
 
@@ -229,12 +229,12 @@ if __name__ == "__main__":
         "ServiceType" : "F",
         "MessageCode" : "MessageAck",
         "Number" : "16511876",
-        "PortID" : "INFX-INFS-20200727-00004",
-        "SubmissionID" : "INFX-2020-07260076",
-        "DonorID" : "INFS",
-        "RecipientID" : "INFX",
+        "PortID" : "INFS-INFX-20200824-00007",
+        "SubmissionID" : "INFS-2020-08240076",
+        "DonorID" : "INFX",
+        "RecipientID" : "INFS",
         "OriginationID" : "CSYS",
-        "DestinationID" : "INFX",
+        "DestinationID" : "INFS",
         "NewRoute" : "a03",
         "PortingDatetime": "202007191242"
     }
@@ -243,7 +243,7 @@ if __name__ == "__main__":
     # infx_handle_np_request(csys_resp)
     # infx_handle_np_request_cancel(csys_resp)
     # infx_handle_np_execute_broadcast(csys_resp)
-    infx_handle_np_execute_complete(csys_resp)
+    # infx_handle_np_execute_complete(csys_resp)
 
     ### Deactivation
     csys_deactivate_resp = {
@@ -277,4 +277,4 @@ if __name__ == "__main__":
         "DestinationID" : "INFS",
     }
     # infx_handle_billing_resolution(csys_resp)
-    infx_handle_billing_resolution_end(csys_resp)
+    # infx_handle_billing_resolution_end(csys_resp)

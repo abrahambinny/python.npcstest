@@ -249,16 +249,16 @@ if __name__ == "__main__":
         "ServiceType" : "F",
         "MessageCode" : "NpRequest",
         "Number" : "16511876",
-        "SubmissionID" : "INFX-2020-07060076",
-        "DonorID" : "INFS",
-        "RecipientID" : "INFX",
+        "SubmissionID" : "INFS-2020-08240076",
+        "DonorID" : "INFX",
+        "RecipientID" : "INFS",
         "CompanyFlag" : "Y",
         "CPR" : "123456789",
         "CommercialRegNumber" : "12345/0",
         "Comments" : "NP Request",
         "OriginationID" : "INFS",
         "DestinationID" : "CSYS",
-        "PortID" : "INFX-INFS-20200727-00004",
+        "PortID" : "INFS-INFX-20200824-00007",
     }
 
     ### Preparation
