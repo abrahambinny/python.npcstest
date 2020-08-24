@@ -243,7 +243,7 @@ if __name__ == "__main__":
     # infx_handle_np_request(csys_resp)
     # infx_handle_np_request_cancel(csys_resp)
     # infx_handle_np_execute_broadcast(csys_resp)
-    # infx_handle_np_execute_complete(csys_resp)
+    infx_handle_np_execute_complete(csys_resp)
 
     ### Deactivation
     csys_deactivate_resp = {

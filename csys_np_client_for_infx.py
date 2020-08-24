@@ -243,20 +243,20 @@ if __name__ == "__main__":
 
     ### Execution
     # np_execute_from_INFX(client, request)
-    np_execute_complete_from_INFX(client, request)
+    # np_execute_complete_from_INFX(client, request)
 
     ### Deactivation
     request_deactivate = {
         "ServiceType" : "F",
         "MessageCode" : "NpDeactivate",
-        "Number" : "16511874",
-        "PortID" : "INFS-INFX-20200726-00012",
+        "Number" : "16511876",
+        "PortID" : "INFS-INFX-20200824-00007",
         "SubscriptionNetworkID" : "INFX",
         "BlockID" : "INFS",
         "OriginationID" : "INFX",
         "DestinationID" : "CSYS",
     }
-    # np_deactivate_from_INFX(client, request_deactivate)
+    np_deactivate_from_INFX(client, request_deactivate)
     # np_deactivate_complete_from_INFX(client, request_deactivate)
 
     ### Query
@@ -285,4 +285,4 @@ if __name__ == "__main__":
         "OriginationID" : "INFX",
         "DestinationID" : "CSYS",
     }
-    billing_resolution_received_from_INFX(client, request_billing_resolution)
+    # billing_resolution_received_from_INFX(client, request_billing_resolution)

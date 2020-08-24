@@ -273,14 +273,14 @@ if __name__ == "__main__":
     request_deactivate = {
         "ServiceType" : "F",
         "MessageCode" : "NpDeactivate",
-        "Number" : "16511874",
-        "PortID" : "INFS-INFX-20200726-00012",
+        "Number" : "16511876",
+        "PortID" : "INFS-INFX-20200824-00007",
         "SubscriptionNetworkID" : "INFX",
         "BlockID" : "INFS",
         "OriginationID" : "INFS",
         "DestinationID" : "CSYS",
     }
-    # np_deactivate_from_INFS(client, request_deactivate)
+    np_deactivate_from_INFS(client, request_deactivate)
     # np_deactivate_complete_from_INFS(client, request_deactivate)
 
     ### Query
