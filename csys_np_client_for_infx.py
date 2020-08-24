@@ -243,7 +243,7 @@ if __name__ == "__main__":
 
     ### Execution
     # np_execute_from_INFX(client, request)
-    # np_execute_complete_from_INFX(client, request)
+    np_execute_complete_from_INFX(client, request)
 
     ### Deactivation
     request_deactivate = {

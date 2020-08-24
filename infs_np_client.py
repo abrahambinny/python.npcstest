@@ -251,7 +251,7 @@ if __name__ == "__main__":
     # infs_handle_np_request_cancel(csys_resp)
 
     ### Execution
-    infs_handle_np_execute_broadcast(csys_resp)
+    # infs_handle_np_execute_broadcast(csys_resp)
     # infs_handle_np_execute_complete(csys_resp)
 
     ### Deactivation
