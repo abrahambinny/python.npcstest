@@ -13,7 +13,7 @@ import suds.sax.attribute as attribute
 from suds.plugin import MessagePlugin
 from suds import WebFault
 
-API_URL = "https://10.1.3.95:8002/spservice/service?wsdl"
+API_URL = "https://10.1.4.28/spservice/service?wsdl"
 USERNAME = "soap_csys_infs"
 PASSWORD = "76Hu25ZPNJzJ2k2N"
 
@@ -235,15 +235,15 @@ if __name__ == "__main__":
     csys_resp = {
         "ServiceType" : "F",
         "MessageCode" : "MessageAck",
-        "Number" : "16511876",
-        "PortID" : "INFS-INFX-20200824-00007",
-        "SubmissionID" : "INFS-2020-08240076",
-        "DonorID" : "INFX",
-        "RecipientID" : "INFS",
+        "Number" : "16501825",
+        "PortID" : "INFX-INFS-20200825-00002",
+        "SubmissionID" : "INFX-2020-08250025",
+        "DonorID" : "INFS",
+        "RecipientID" : "INFX",
         "OriginationID" : "CSYS",
         "DestinationID" : "INFS",
         "NewRoute" : "a03",
-        "PortingDatetime": "202007191242"
+        "PortingDatetime": "202008251120"
     }
 
     ### Preparation
@@ -252,14 +252,14 @@ if __name__ == "__main__":
 
     ### Execution
     # infs_handle_np_execute_broadcast(csys_resp)
-    infs_handle_np_execute_complete(csys_resp)
+    # infs_handle_np_execute_complete(csys_resp)
 
     ### Deactivation
     csys_deactivate_resp = {
         "ServiceType" : "F",
         "MessageCode" : "NpDeactivateAck",
-        "Number" : "16511874",
-        "PortID" : "INFS-INFX-20200726-00012",
+        "Number" : "16501825",
+        "PortID" : "INFS-INFX-20200825-00003",
         "SubscriptionNetworkID" : "INFX",
         "BlockID" : "INFS",
         "OriginationID" : "CSYS",

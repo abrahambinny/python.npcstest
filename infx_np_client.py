@@ -228,13 +228,13 @@ if __name__ == "__main__":
     csys_resp = {
         "ServiceType" : "F",
         "MessageCode" : "MessageAck",
-        "Number" : "16511876",
-        "PortID" : "INFS-INFX-20200824-00007",
-        "SubmissionID" : "INFS-2020-08240076",
-        "DonorID" : "INFX",
-        "RecipientID" : "INFS",
+        "Number" : "16501825",
+        "PortID" : "INFX-INFS-20200825-00002",
+        "SubmissionID" : "INFX-2020-08250025",
+        "DonorID" : "INFS",
+        "RecipientID" : "INFX",
         "OriginationID" : "CSYS",
-        "DestinationID" : "INFS",
+        "DestinationID" : "INFX",
         "NewRoute" : "a03",
         "PortingDatetime": "202007191242"
     }
@@ -243,20 +243,20 @@ if __name__ == "__main__":
     # infx_handle_np_request(csys_resp)
     # infx_handle_np_request_cancel(csys_resp)
     # infx_handle_np_execute_broadcast(csys_resp)
-    infx_handle_np_execute_complete(csys_resp)
+    # infx_handle_np_execute_complete(csys_resp)
 
     ### Deactivation
     csys_deactivate_resp = {
         "ServiceType" : "F",
-        "MessageCode" : "MessageAck",
-        "Number" : "16511871",
-        "PortID" : "INFS-INFX-20200721-00000",
+        "MessageCode" : "NpDeactivateAck",
+        "Number" : "16501825",
+        "PortID" : "INFS-INFX-20200825-00003",
         "SubscriptionNetworkID" : "INFX",
         "BlockID" : "INFS",
         "OriginationID" : "CSYS",
         "DestinationID" : "INFX",
     }
-    # infx_handle_np_deactivate_complete(csys_deactivate_resp)
+    infx_handle_np_deactivate_complete(csys_deactivate_resp)
 
     ###Query
     csys_query_resp = {

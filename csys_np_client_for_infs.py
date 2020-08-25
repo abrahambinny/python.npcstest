@@ -248,18 +248,19 @@ if __name__ == "__main__":
     request = {
         "ServiceType" : "F",
         "MessageCode" : "NpRequest",
-        "Number" : "16511876",
-        "SubmissionID" : "INFS-2020-08240076",
-        "DonorID" : "INFX",
-        "RecipientID" : "INFS",
+        "Number" : "16501825",
+        "SubmissionID" : "INFX-2020-08250025",
+        "DonorID" : "INFS",
+        "RecipientID" : "INFX",
         "CompanyFlag" : "Y",
         "CPR" : "123456789",
         "CommercialRegNumber" : "12345/0",
         "Comments" : "NP Request",
-        "OriginationID" : "INFS",
+        "OriginationID" : "INFX",
         "DestinationID" : "CSYS",
-        "PortID" : "INFS-INFX-20200824-00007",
+        "PortID" : "INFX-INFS-20200825-00002",
     }
+
 
     ### Preparation
     # np_request_from_INFS(client, request)
@@ -273,15 +274,15 @@ if __name__ == "__main__":
     request_deactivate = {
         "ServiceType" : "F",
         "MessageCode" : "NpDeactivate",
-        "Number" : "16511876",
-        "PortID" : "INFS-INFX-20200824-00007",
+        "Number" : "16501825",
+        "PortID" : "INFS-INFX-20200825-00003",
         "SubscriptionNetworkID" : "INFX",
         "BlockID" : "INFS",
         "OriginationID" : "INFS",
         "DestinationID" : "CSYS",
     }
-    np_deactivate_from_INFS(client, request_deactivate)
-    # np_deactivate_complete_from_INFS(client, request_deactivate)
+    # np_deactivate_from_INFS(client, request_deactivate)
+    np_deactivate_complete_from_INFS(client, request_deactivate)
 
     ### Query
     request_query =  {

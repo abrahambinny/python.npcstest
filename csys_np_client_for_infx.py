@@ -128,7 +128,7 @@ def np_execute_complete_from_INFX(client, request):
         if csys_resp:
             logger.info("CSYS SendNpExecuteComplete Response:")
             logger.info(csys_resp)
-            # infs_resp = infs_handle_np_execute_complete(csys_resp)
+            infs_resp = infs_handle_np_execute_complete(csys_resp)
         else:
             logger.error("CSYS SendNpExecuteComplete Error:")
     except Exception as e:
@@ -224,17 +224,17 @@ if __name__ == "__main__":
     request = {
         "ServiceType" : "F",
         "MessageCode" : "NpRequest",
-        "Number" : "16511876",
-        "SubmissionID" : "INFS-2020-08240076",
-        "DonorID" : "INFX",
-        "RecipientID" : "INFS",
+        "Number" : "16501825",
+        "SubmissionID" : "INFX-2020-08250025",
+        "DonorID" : "INFS",
+        "RecipientID" : "INFX",
         "CompanyFlag" : "Y",
         "CPR" : "123456789",
         "CommercialRegNumber" : "12345/0",
         "Comments" : "NP Request",
-        "OriginationID" : "INFS",
+        "OriginationID" : "INFX",
         "DestinationID" : "CSYS",
-        "PortID" : "INFS-INFX-20200824-00007",
+        "PortID" : "INFX-INFS-20200825-00002",
     }
 
     ### Preparation
@@ -249,18 +249,18 @@ if __name__ == "__main__":
     request_deactivate = {
         "ServiceType" : "F",
         "MessageCode" : "NpDeactivate",
-        "Number" : "16511876",
-        "PortID" : "INFS-INFX-20200824-00007",
+        "Number" : "16501825",
+        "PortID" : "INFS-INFX-20200825-00003",
         "SubscriptionNetworkID" : "INFX",
         "BlockID" : "INFS",
-        "OriginationID" : "INFX",
+        "OriginationID" : "INFS",
         "DestinationID" : "CSYS",
     }
-    np_deactivate_from_INFX(client, request_deactivate)
+    # np_deactivate_from_INFX(client, request_deactivate)
     # np_deactivate_complete_from_INFX(client, request_deactivate)
 
     ### Query
-    request_query =  {
+    request_query = {
         "MessageCode" : "NpQuery",
         "DateFrom" : "202007190000",
         "DateTo" : "202007220000",
